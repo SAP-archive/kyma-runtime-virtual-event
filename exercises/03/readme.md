@@ -418,3 +418,49 @@ With that you've succesfully deployed your service to Kyma. In the next section 
 
 ### Deploy to Kyma using the Console UI
 
+If you don't want to use the CLI to make your deployment you can always use your Kyma console to use a graphical interface to manage your Kyma cluster.
+
+Remember in exercise 01 when you've installed Kyma locally on Minikube, you got the login data for the Kyma console.
+
+Open the [Kyma Console](https://console.kyma.local/) and log youself in as an admin.
+
+![kyma-console-deployment-00](kyma-runtime-virtual-event-00.png)
+
+After successfully logging in you should see the **Overview** page of your Kyma console.
+
+![kyma-console-deployment-02](kyma-runtime-virtual-event-02.png)
+
+From there create a new **Namespace** where you can deploy your applications and services.
+
+Click on *Add new namespace* to create a new Namespace.
+
+![kyma-console-deployment-03](kyma-runtime-virtual-event-03.png)
+
+In the upcoming dialogue enter a namespace name and if you want a label too.
+
+I've entered the following values and click on **Create**:
+
+| Key  | Value |
+| ------------- | ------------- |
+| Name  | *devtoberfest*  |
+| Labels  | *learning=devtoberfest*  |
+
+![kyma-console-deployment-04](kyma-runtime-virtual-event-04.png)
+
+The newly created namespace should automatically open up with the deployments and pods visible. Now that we have spun up the new namespace we can go ahead and deploy the application.
+
+Click on **Deploy new resource**. 
+
+![kyma-console-deployment-04](kyma-runtime-virtual-event-04.png)
+
+In the upcoming dialogue browse for the **deployment.yaml** and click on **Deploy**.
+
+![kyma-console-deployment-05](kyma-runtime-virtual-event-05.png)
+
+![kyma-console-deployment-06](kyma-runtime-virtual-event-06.png)
+
+After the deployment is through, you will see the circular bars spinning, the deployment and pod shows **1/1**.
+
+![kyma-console-deployment-07](kyma-runtime-virtual-event-07.png)
+
+With that you've successfully deployed your first application over Kyma console.
