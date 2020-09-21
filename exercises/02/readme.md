@@ -8,7 +8,7 @@ As part of Devtoberfest enablement for Kyma we wanted to show you how you can ru
 
 ### Project Gardener
 
-You can install your own version of Gardener on the hyperscaler of your choice or even on a local system like openstack.  
+You can install your own version of Gardener on the hyperscaler of your choice or even on a local system like openstack.  These same options can be available when you want to deploy a cluster on your gardener system.  
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/gardener_cluster_deploy_types.png)
 Once you have browsed the main website here: (https://gardener.cloud/) have a look at the documentaton page for concepts, setup guides and tutorials here (https://gardener.cloud/documentation/home/)
 
