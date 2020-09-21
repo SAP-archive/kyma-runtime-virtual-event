@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static("express"));
-
+app.use("/js", express.static(__dirname + "/js"));
 // default URL for website
 app.use('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
