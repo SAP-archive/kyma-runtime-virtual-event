@@ -15,15 +15,15 @@ The hardware requirements are:
 
 In order to run Kyma locally inside of an Kubernetes cluster you have to make sure that all needed components have the correct version installed. 
 
-If we follow the Installation Guide, the following versions are noted for Kyma V1.14 (latest):
+If we follow the Installation Guide, the following versions are noted for Kyma V1.15.1 (latest):
 
-- Minikube 1.6.2
-- Kubernetes-CLI 1.16.3
+- Minikube 1.13.0
+- Kubernetes-CLI 1.19.2
 - Hyperkit/Hyper-V
-- Docker
+- Docker Desktop
 
 In addition we need to install docker and the Kyma CLI.
-For docker there is no version specified, for the Kyma CLI we want to make sure that, if you’re using Homebrew(MacOS) or Chocolatey(Windows), it's installing the correct version 1.14.
+For docker there is no version specified, for the Kyma CLI we want to make sure that, if you’re using Homebrew(MacOS) or Chocolatey(Windows), it's installing the correct version 1.15.1.
 
 - On Mac you want to install the Hyperkit driver.
 
@@ -31,43 +31,59 @@ For docker there is no version specified, for the Kyma CLI we want to make sure 
 
 ### MacOS
 
-1. Install <b>Kubernetes-CLI 1.16.3</b>
+1. Install Minikube v1.13.0 and its dependencies
+
+With the current and latest version of Kyma we can simply use Homebrew to install the latest version of Minikube (1.13.0) and its dependencies kubernetes-cli (1.19.2). Homebrew will resolve the dependencies and install all of them automatically.
+
+I am using [iTerm2](http://iterm2.com/) as my command line interface but you can also use the standard Terminal application already installed on your Mac machine.
+
+In your shell enter the following command to install Minikube:
 
 ```
-brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/62afc1f862a762a037bf30150c31479630469517/Formula/kubernetes-cli.rb -f
+brew install minikube
 ```
 
-```
-kubectl version
-```
+2. Verify the Minikube and Kubernetes-CLI version
 
-2. Install Minikube 1.6.2
+Now that Homebrew has downloaded and installed Minikube and its dependencies we want to make sure the versions are correct before proceeding.
 
-```
-brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/21a0efbd754779d29a078df5e74e0d90f06ed993/Formula/minikube.rb -f
-```
+Open your shell and enter the following command to check the Minikube version:
 
 ```
 minikube version
 ```
 
-3. Install kyma-cli
+The outpul should show you the version number **1.13.0**.
+
+We can do the same thing for the kubernetes-cli. Enter the following command in your shell:
+
+```
+kubectl version
+```
+
+The output is a bit more extensive here but we're just interested in the first line which should show you a version of **1.19.2**.
+
+If we have both versions verified we can continue to the next step.
+
+3. Install the Kyma-CLI
+
+Again, we can utilize Homebrew to install the Kyma-CLI which we're going to use to provision Minikube and install Kyma on the provisioned Minikube cluster.
+
+In your shell enter the following command and execute it:
 
 ```
 brew install kyma-cli
 ```
 
+After Homebrew downloaded and installed the CLI make sure the versioning is correct:
+
 ```
 kyma version
 ```
 
-4. Install Hyperkit
+The output should show you a version of **1.15.1** or newer.
 
-```
-brew install hyperkit
-```
-
-5. Provision Minikube
+4. Provision Minikube
 
 With the correct versions installed we can now provision Minikube with the correct configuration to run a local Kyma installment.
 
@@ -79,7 +95,7 @@ kyma provision minikube —vm-driver=hyperkit
 
 > The VM-Driver can be also set in the Minikube configuration file.
 
-6. Install Kyma on the Minikube Cluster
+5. Install Kyma on the Minikube Cluster
 
 The kubernetes cluster is up and running, the Kyma environment can now be deployed and installed.
 
@@ -89,7 +105,7 @@ kyma install
 
 This will now take a while because Kyma needs to fetch and install all needed dependencies to run on the cluster. The components it is installing are for example istio, all sorts of knative packages and more. You can see a detailed list while Kyma is installing.
 
-7. Verify your Kyma installment
+6. Verify your Kyma installment
 
 To verify our installment we can fetch all pods of our current cluster and see in the output if Kyma is actually running inside of a Pod on our cluster.
 
@@ -97,7 +113,7 @@ To verify our installment we can fetch all pods of our current cluster and see i
 kubectl get pods —all-namespaces
 ```
 
-8. Open the Kyma console
+7. Open the Kyma console
 
 The Kyma console is a Web UI used for Kyma administrators to manage the Kyma environment on an visual interface. You could also do everything on console as well.
 
@@ -191,3 +207,9 @@ kubectl get pods —all-namespaces
 7. Open the Kyma console
 
 The Kyma console is a Web UI used for Kyma administrators to manage the Kyma environment on an visual interface. You could also do everything on console as well.
+
+### Edit your Host File
+
+In order for Kyma to be able to receive and establish network connection you should add the IP to your Hosts file. A Hosts file exist for both macOS as well as Windows. Please follow the following guides to achieve the secure change of the Hosts file. How to do this you can find under the **Tips** section:
+
+- [Kyma-Hands-On - Part 1 by Anna Jung](https://blogs.sap.com/2020/06/22/kyma-hands-on-part-1/)
