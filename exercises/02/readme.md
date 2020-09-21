@@ -6,9 +6,11 @@ As part of Devtoberfest enablement for Kyma we wanted to show you how you can ru
 
 ## Details
 
-### Project Gardnener
+### Project Gardener
 
-You can install your own version of Gardener on the hyperscaler of your choice or even on a local system like openstack.  Once you have browsed the main website here: (https://gardener.cloud/) have a look at the documentaton page for concepts, setup guides and tutorials here (https://gardener.cloud/documentation/home/)
+You can install your own version of Gardener on the hyperscaler of your choice or even on a local system like openstack.  
+![](exercises/02/gardener_cluster_aws_status.png)
+Once you have browsed the main website here: (https://gardener.cloud/) have a look at the documentaton page for concepts, setup guides and tutorials here (https://gardener.cloud/documentation/home/)
 
 
 
