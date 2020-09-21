@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lottery Quick Pick</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <script src="js/numberGenerator.js"></script>
+    <script src="js/restUtils.js"></script>
+    <script src="js/hostName.js"></script>
+    <div id="body">
+        <div id="content">
+            <h1 class="text">Lottery Quick Pick</h1>
+            <h2 class="text">Just as fast as a scratch ticket.</h2>
+            <br>
+            <button onclick="giveWinningNumbers()">Click me</button>
+            <script src="/js/numberGenerator.js"></script>
+            <br> Numbers:
+            <label id="baseNumbersLabel"></label>
+            <br>
+            <label id="pNumberLabel"></label>
+            <br>
+        </div>
+        <div id="footer">
+            <a href="https://kyma-project.io/"><button class="footer">project: Kyma</button></a>
+            <button onclick="getHostName()" class="footer" id="hostname">Hostname</button>
+        </div>
+    </div>
+</body>
+
+</html>
