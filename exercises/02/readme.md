@@ -2,13 +2,13 @@
 
 **This enablement content is for Devtoberfest Week 7: 05 October → 09 October 2020.**
 
-As part of Devtoberfest enablement for Kyma we wanted to show you how you can run and install Kyma on a hyperscaler of your choice.  To do this we will walk you through another open source project SAP has released called project Gardener. While this system can be isntalled by you, SAP knows that a hosted and managed version can 
+As part of Devtoberfest enablement for Kyma we wanted to show you how you can run and install Kyma on a hyperscaler of your choice.  To do this we will walk you through another open source project SAP has released called project Gardener. While this system can be isntalled by you, SAP has a hosted and managed version that you can subscripe to as an SAP managed service. 
 
 ## Details
 
 ### Project Gardnener
 
-You can install your own version of Gardener on the hyperscaler of your choice or even on a local systen like openstack.  Once you have browsed the main website here: (https://gardener.cloud/) have a look at the documentaton page for concepts, setup guides and tutorials here (https://gardener.cloud/documentation/home/)
+You can install your own version of Gardener on the hyperscaler of your choice or even on a local system like openstack.  Once you have browsed the main website here: (https://gardener.cloud/) have a look at the documentaton page for concepts, setup guides and tutorials here (https://gardener.cloud/documentation/home/)
 
 
 
