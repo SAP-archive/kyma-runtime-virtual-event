@@ -1,0 +1,77 @@
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: number-generator-service
+  labels:
+    app: number-generator-service
+    exercise: excercise04
+spec:
+  deps: |
+    {
+      "name": "number-generator-service",
+      "version": "1.0.0"      
+    }
+  labels:
+    app: number-generator-service
+  source: |
+    module.exports = {
+      main: function(event, context) {
+        var generatedNumber = Math.ceil(Math.random(0, 1) * 69).toString();
+        return generatedNumber;
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-generator-service
+  labels:
+    app: numbers-generator-service
+    exercise: excercise04    
+spec:
+  deps: |
+    {
+      "name": "numbers-generator-service",
+      "version": "1.0.0",
+      "dependencies": {
+        "axios": "0.20"
+      }            
+    }
+  labels:
+    app: numbers-generator-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const axios = require('axios');
+        const apiURL = 'http://number-generator-service.devktoberfest:80';
+        
+        let generatedNumbers = [];
+        var numberOfInteractions = 5;
+      
+          for (i = 0; i < numberOfInteractions; i++) {
+            const response = await axios.get(apiURL).then(resp => {
+                generatedNumbers.push(resp.data);                  
+                return resp.data;
+            });
+        }
+        return JSON.stringify(generatedNumbers);
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
