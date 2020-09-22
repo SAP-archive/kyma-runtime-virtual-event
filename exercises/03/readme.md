@@ -22,7 +22,7 @@ The application is structured as the following:
 
 ![kyma-runtime-virtual-event-01](kyma-runtime-virtual-event-01.png)
 
-**[style.css](/number-generator-base-project/css/style.css)**
+**[css/style.css](/number-generator-base-project/css/style.css)**
 
 A simple stylesheet creating some basic formatting to display the result of the number generator.
 
