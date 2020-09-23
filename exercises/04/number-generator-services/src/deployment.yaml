@@ -2,6 +2,7 @@ apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
   name: number-generator-service
+  namespace: devktoberfest
   labels:
     app: number-generator-service
     exercise: excercise04
@@ -34,6 +35,7 @@ apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
   name: numbers-generator-service
+  namespace: devktoberfest
   labels:
     app: numbers-generator-service
     exercise: excercise04    
