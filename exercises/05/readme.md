@@ -9,8 +9,9 @@ The goal is to create new Serverless functions and secure them via OAuth2 API us
 
 ### You Will Learn How to: 
 
-- Create an Serverless service in the *project: "Kyma"*
-- Create an OAuth2 client credentials
-- Configure a Serverless service to be authenticated using OAuth2 
+- Add an Addon for Redis to the Catalog of the *project: "Kyma"*
+- Create a new instance of the Addon 
+- Bind the instance of the Redis Addon to the Serverless function
+- Consume redis service to add and read keys inside the lambda
 
 ## Steps

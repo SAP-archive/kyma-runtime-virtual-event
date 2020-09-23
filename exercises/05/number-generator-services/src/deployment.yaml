@@ -45,7 +45,8 @@ spec:
       "name": "numbers-generator-service",
       "version": "1.0.0",
       "dependencies": {
-        "axios": "0.20"
+        "axios": "0.20",
+        "redis": "3.0.2"
       }            
     }
   labels:
@@ -54,8 +55,16 @@ spec:
     module.exports = {
       main: async function(event, context) {
         const axios = require('axios');
+        const redis = require('redis');
+        client = redis.createClient({
+          port: process.env.REDIS_PORT,
+          host: process.env.REDIS_HOST,
+          password: process.env.REDIS_PASSWORD
+        });
+
         const apiURL = 'http://number-generator-service.devktoberfest';
         console.log('Redis port: ' + process.env.REDIS_PORT);
+
 
         let generatedNumbers = [];
         var numberOfInteractions = 5;
