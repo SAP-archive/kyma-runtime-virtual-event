@@ -1,0 +1,49 @@
+apiVersion: addons.kyma-project.io/v1alpha1
+kind: AddonsConfiguration
+metadata:
+  name: redis-addon
+  namespace: devktoberfest
+spec:
+  reprocessRequest: 0
+  repositories:
+    - url: https://github.com/kyma-project/addons/releases/download/0.12.0/index-testing.yaml
+# kubectl get addons redis-addon -n devktoberfest -o=jsonpath="{.status.phase}"
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: numbers-redis-service
+  namespace: devktoberfest
+spec:
+  serviceClassExternalName: redis
+  servicePlanExternalName: micro
+  parameters:
+    imagePullPolicy: Always
+# kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: numbers-redis-servicebinding
+  namespace: devktoberfest
+spec:
+  instanceRef:
+    name: numbers-redis-service
+# kubectl get servicebinding numbers-redis-servicebinding -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
+---
+apiVersion: servicecatalog.kyma-project.io/v1alpha1
+kind: ServiceBindingUsage
+metadata:
+  name: numbers-redis-bindingfunction
+  namespace: devktoberfest
+spec:
+  serviceBindingRef:
+    name: numbers-redis-servicebinding
+  usedBy:
+    kind: serverless-function
+    name: numbers-generator-service
+  parameters:
+    envPrefix:
+      name: "REDIS_"
+# kubectl get servicebindingusage numbers-redis-bindingfunction -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
+# kubectl get secret redis-addon -n devktoberfest -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'

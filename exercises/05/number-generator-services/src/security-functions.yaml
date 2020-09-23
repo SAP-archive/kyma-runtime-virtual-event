@@ -1,0 +1,35 @@
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: number-service-apirule
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  service:
+    name: number-generator-service
+    port: 80
+    host: number-generator-service
+  rules:
+    - path: /.*
+      methods: ["GET"]
+      accessStrategies:
+        - handler: oauth2_introspection
+          config:
+            required_scope: ["read"]
+---
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: numbers-service-apirule
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  service:
+    name: numbers-generator-service
+    port: 80
+    host: numbers-generator-service
+  rules:
+    - path: /.*
+      methods: ["GET"]
+      accessStrategies:
+        - handler: oauth2_introspection
+          config:
+            required_scope: ["read"]

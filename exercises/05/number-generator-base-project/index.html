@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lottery Quick Pick</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="js/numberGenerator.js"></script>
+</head>
+
+<body>
+
+    <div id="body">
+        <div id="content">
+            <h1 class="text">Lottery Quick Pick</h1>
+            <h2 class="text">Just as fast as a scratch ticket.</h2>
+            <br>
+            <button onclick="giveWinningNumbers()">Click me</button>
+            <br> Numbers:
+            <label id="baseNumbersLabel"></label>
+            <br>
+            <label id="pNumberLabel"></label>
+            <br>
+        </div>
+        <div id="listNumbers">
+            <h2 class="text">See the history of the lotter.</h2>
+            <br>
+            <button onclick="giveWinningNumbers()">Click me</button>
+
+            <table id="tableNumbers">
+                <tr>
+                    <th>Id</th>
+                    <th>Numbers</th>
+                </tr>
+            </table>
+        </div>
+        <div id="footer">
+            <a href="https://kyma-project.io/"><button class="footer">project: Kyma</button></a>
+        </div>
+    </div>
+</body>
+
+</html>
