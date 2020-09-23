@@ -8,7 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(express.static("express"));
 
-
 app.use("/js", express.static(__dirname + "/js"));
 app.use("/css", express.static(__dirname + "/css"));
 
