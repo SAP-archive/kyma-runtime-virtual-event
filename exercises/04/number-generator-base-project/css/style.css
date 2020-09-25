@@ -1,0 +1,63 @@
+.text {
+    color: #000000;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.content {
+    text-align: center;
+    font-size: 18px;
+    padding: 2px;
+    background-color: #FFFFFF;
+    color: #000000;
+    transition-duration: 0.25s;
+    border: 2px solid #FFFFFF;
+}
+
+.content:hover {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 2px solid #000000;
+}
+
+.footer {
+    text-align: center;
+    font-size: 18px;
+    padding: 2px;
+    background-color: #FFFFFF;
+    color: #000000;
+    transition-duration: 0.25s;
+    border: 2px solid #000000;
+}
+
+.footer:hover {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 2px solid #000000;
+}
+
+#body {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content {
+    padding-bottom: 3.8rem;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3.8rem;
+}
+
+#baseNumbersLabel {
+    font-size: 18px;
+    color: #000000;
+}
+
+#pNumberLabel {
+    font-size: 18px;
+    background-color: #FF0000;
+}

@@ -2,6 +2,7 @@ apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
   name: number-generator-service
+  namespace: devktoberfest
   labels:
     app: number-generator-service
     exercise: excercise04
@@ -34,6 +35,7 @@ apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
   name: numbers-generator-service
+  namespace: devktoberfest
   labels:
     app: numbers-generator-service
     exercise: excercise04    
@@ -52,7 +54,7 @@ spec:
     module.exports = {
       main: async function(event, context) {
         const axios = require('axios');
-        const apiURL = 'http://number-generator-service.devktoberfest:80';
+        const apiURL = 'http://number-generator-service.devktoberfest';
         
         let generatedNumbers = [];
         var numberOfInteractions = 5;
