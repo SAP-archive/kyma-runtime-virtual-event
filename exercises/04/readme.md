@@ -132,7 +132,7 @@ spec:
     module.exports = {
       main: async function(event, context) {
         const axios = require('axios');
-        const apiURL = 'http://number-generator-service.default';
+        const apiURL = 'http://number-generator-service.devktoberfest';
         
         let generatedNumbers = [];
         var numberOfInteractions = 5;
@@ -222,7 +222,7 @@ spec:
     module.exports = {
       main: async function(event, context) {
         const axios = require('axios');
-        const apiURL = 'http://number-generator-service.default:80';
+        const apiURL = 'http://number-generator-service.devktoberfest';
         
         let generatedNumbers = [];
         var numberOfInteractions = 5;
@@ -265,7 +265,7 @@ touch security-functions.yaml
 apiVersion: gateway.kyma-project.io/v1alpha1
 kind: APIRule
 metadata:
-  name: powerball-apirule
+  name: number-service-apirule
 spec:
   gateway: kyma-gateway.kyma-system.svc.cluster.local
   service:
@@ -283,7 +283,7 @@ spec:
 apiVersion: gateway.kyma-project.io/v1alpha1
 kind: APIRule
 metadata:
-  name: lottery-apirule
+  name: numbers-service-apirule
 spec:
   gateway: kyma-gateway.kyma-system.svc.cluster.local
   service:
@@ -296,7 +296,7 @@ spec:
       accessStrategies:
         - handler: oauth2_introspection
           config:
-            required_scope: ["read"]         
+            required_scope: ["read"]     
 ```
 
 Getting more in-depth on the YAML declared above, we will have the following essential tags:
@@ -327,15 +327,13 @@ In the terminal still open execute the following commands:
 To verify that everything worked just fine we can try to curl our service deployment:
 
 ```
-curl https://number-generator-service.kyma.local/
-curl https://numbers-generator-service.kyma.local/
+curl -ik https://number-generator-service.kyma.local/
+curl -k https://numbers-generator-service.kyma.local/
 ```
 
 Also you should be able to open the website in your browser.
 
 You will see the following response for each service:
-
-//TODO:
 
 The new services are exposed, but controlled by authentication service. Let's work on that on the next section.
 
@@ -361,16 +359,15 @@ To create a new OAuth2 client credential, you need to take into consideration th
 apiVersion: hydra.ory.sh/v1alpha1
 kind: OAuth2Client
 metadata:
-  name: lottery-client
+  name: number-generator-client
 spec:
   grantTypes:
     - "client_credentials"
   scope: "read"
-  secretName: lottery-client  
+  secretName: number-generator-client
 ```
 
-For this exercise we are creating a new OAuth2Client with the name *lottery-client*
-To get more information about grant types and scopes for OAuth2Client objects, go to the documentation at: TODO://
+For this exercise we are creating a new OAuth2Client with the name *number-generator-client*
 
 When you create a new OAuth2Client you can also provides the client_id and the client_secret, for the purpose of this exercise, we will let Kyma generate a secured keys.
 
@@ -390,7 +387,7 @@ Go to your CLI and let's retrieve the generated keys for the OAuth2Client.
 1. Export as environment variables, the client name, namespace and domain that the OAuth2Client was create, like follows: 
 
 ```
-export CLIENT_NAME=lottery-client
+export CLIENT_NAME=number-generator-client
 export CLIENT_NAMESPACE=devktoberfest
 export DOMAIN=kyma.local
 ```
@@ -428,5 +425,5 @@ The ````curl```` command uses the Bearer token to call our exposed services and 
 
 For validate all the exercises using our webapp, use our Docker image provided with the proper adapations. 
 
-
+With this process, you have successfully completed the exercise 4, congratulations!!
 
