@@ -20,7 +20,8 @@ spec:
   parameters:
     imagePullPolicy: Always
 # kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
----
+
+cat <<EOF | kubectl apply -f -
 apiVersion: servicecatalog.k8s.io/v1beta1
 kind: ServiceBinding
 metadata:
@@ -45,5 +46,27 @@ spec:
   parameters:
     envPrefix:
       name: "REDIS_"
+
+# Get the ready status of the servicebindingusage
 # kubectl get servicebindingusage numbers-redis-bindingfunction -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
-# kubectl get secret redis-addon -n devktoberfest -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
+
+# Get the information of secret created for the binding usage
+# kubectl get secret numbers-redis-servicebinding -n devktoberfest -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
+
+---
+cat <<EOF | kubectl apply -f -
+apiVersion: servicecatalog.kyma-project.io/v1alpha1
+kind: ServiceBindingUsage
+metadata:
+  name: numbers-redis-binding-history
+  namespace: devktoberfest
+spec:
+  serviceBindingRef:
+    name: numbers-redis-servicebinding
+  usedBy:
+    kind: serverless-function
+    name: numbers-history-service
+  parameters:
+    envPrefix:
+      name: "REDIS_"
+EOF

@@ -56,15 +56,15 @@ spec:
       main: async function(event, context) {
         const axios = require('axios');
         const redis = require('redis');
-        client = redis.createClient({
-          port: process.env.REDIS_PORT,
-          host: process.env.REDIS_HOST,
-          password: process.env.REDIS_PASSWORD
-        });
+
+        const client = redis.createClient(
+            {host: process.env.REDIS_HOST,
+             port: process.env.REDIS_PORT,
+             password: process.env.REDIS_REDIS_PASSWORD
+             }
+         );
 
         const apiURL = 'http://number-generator-service.devktoberfest';
-        console.log('Redis port: ' + process.env.REDIS_PORT);
-
 
         let generatedNumbers = [];
         var numberOfInteractions = 5;
@@ -75,9 +75,150 @@ spec:
                 return resp.data;
             });
         }
-        return JSON.stringify(generatedNumbers);
+
+        returnArrayNumbers = JSON.stringify(generatedNumbers);
+
+
+        //Use the new Redis Connection and insert the result of numbers into a list
+        key = new Date().toISOString();
+        client.set(key, returnArrayNumbers,
+            function(err, reply) {
+                console.log('Key: ' + key + ' inserted ' + reply);
+            });
+
+        return returnArrayNumbers;
       }
     }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-generator-service
+  namespace: devktoberfest
+  labels:
+    app: numbers-generator-service
+    exercise: excercise04
+spec:
+  deps: |
+    {
+      "name": "numbers-generator-service",
+      "version": "1.0.0",
+      "dependencies": {
+        "axios": "0.20",
+        "redis": "3.0.2"
+      }
+    }
+  labels:
+    app: numbers-generator-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const axios = require('axios');
+        const redis = require('redis');
+
+        const client = redis.createClient(
+            {host: process.env.REDIS_HOST,
+             port: process.env.REDIS_PORT,
+             password: process.env.REDIS_REDIS_PASSWORD
+             }
+         );
+
+        const apiURL = 'http://number-generator-service.devktoberfest';
+
+        let generatedNumbers = [];
+        var numberOfInteractions = 5;
+
+          for (i = 0; i < numberOfInteractions; i++) {
+            const response = await axios.get(apiURL).then(resp => {
+                generatedNumbers.push(resp.data);
+                return resp.data;
+            });
+        }
+
+        returnArrayNumbers = JSON.stringify(generatedNumbers);
+
+
+        //Use the new Redis Connection and insert the result of numbers into a list
+        key = new Date().toISOString();
+        client.set(key, returnArrayNumbers,
+            function(err, reply) {
+                console.log('Key: ' + key + ' inserted ' + reply);
+            });
+
+        return returnArrayNumbers;
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-history-service
+  namespace: devktoberfest
+  labels:
+    app: numbers-history-service
+    exercise: excercise05
+spec:
+  deps: |
+    {
+      "name": "numbers-history-service",
+      "version": "1.0.0",
+      "dependencies": {
+        "redis": "3.0.2"
+      }
+    }
+  labels:
+    app: numbers-history-service
+  source: |
+    module.exports = {
+          main: async function(event, context) {
+            const redis = require('redis');
+
+            const client = redis.createClient(
+                {host: process.env.REDIS_HOST,
+                 port: process.env.REDIS_PORT,
+                 password: process.env.REDIS_REDIS_PASSWORD
+                 }
+             );
+
+            //Use the new Redis Connection and get the all keys to iterate and get the values
+            var history = [];
+            client.keys('*', function(err, keys) {
+              if (err) return console.log(err);
+              if (keys) {
+                for (var i=0; i < keys.length; i++){
+                  client.get(keys[i], function (error, value) {
+                    if (error) return console.log(error);
+                    var entry = {};
+                    entry['id'] = keys[i];
+                    entry['numbers'] = value;
+                    history.push(entry);
+                  });
+                }
+
+              }
+            });
+            console.log(history);
+            return JSON.stringify(history);
+          }
+        }
   minReplicas: 1
   maxReplicas: 1
   resources:
