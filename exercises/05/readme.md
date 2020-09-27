@@ -1,11 +1,12 @@
 # Exercise 5 - Create extensions to get Additional Services
 
 ## Introduction - Scenario
-In this exercise you will get introduced to the Serverless functionality of Kyma and how to expose them via OAuth2 secured API. 
-This exercise will continue to use our web application created in the previous exercise, it will be modified replacing the local functions to call the new Kyma Serverless Services exposed.
-The exercise 4, also generated a ready to use Docker image of the web application, which can led you to focus on the Kyma activities
+In this exercise 5, you will learn how to add an Addon to your Kyma cluster. We will show you how to do this with a Redis Addon.
+With the addon added to your Kyma cluster, we will provide an instance of the Redis service.
+The Redis service instance will be bound to our previous Serverless function created, the numbers-generator-service; we will store
+the numbers generated for each call and make history that to be consumed via service later.
 
-The goal is to create new Serverless functions and secure them via OAuth2 API using your *project: "Kyma"* installation.
+The main goal is to create an extension on Kyma and get additional services consumed by our previously lambda created.
 
 ### You Will Learn How to: 
 
