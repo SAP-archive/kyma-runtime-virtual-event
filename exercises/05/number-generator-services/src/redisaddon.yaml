@@ -1,3 +1,4 @@
+  cat <<EOF | kubectl apply -f -
 apiVersion: addons.kyma-project.io/v1alpha1
 kind: AddonsConfiguration
 metadata:
@@ -7,8 +8,10 @@ spec:
   reprocessRequest: 0
   repositories:
     - url: https://github.com/kyma-project/addons/releases/download/0.12.0/index-testing.yaml
+EOF
 # kubectl get addons redis-addon -n devktoberfest -o=jsonpath="{.status.phase}"
 ---
+cat <<EOF | kubectl apply -f -
 apiVersion: servicecatalog.k8s.io/v1beta1
 kind: ServiceInstance
 metadata:
@@ -19,6 +22,7 @@ spec:
   servicePlanExternalName: micro
   parameters:
     imagePullPolicy: Always
+EOF
 # kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
 
 cat <<EOF | kubectl apply -f -
@@ -30,8 +34,10 @@ metadata:
 spec:
   instanceRef:
     name: numbers-redis-service
+EOF
 # kubectl get servicebinding numbers-redis-servicebinding -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
 ---
+cat <<EOF | kubectl apply -f -
 apiVersion: servicecatalog.kyma-project.io/v1alpha1
 kind: ServiceBindingUsage
 metadata:
@@ -46,7 +52,7 @@ spec:
   parameters:
     envPrefix:
       name: "REDIS_"
-
+EOF
 # Get the ready status of the servicebindingusage
 # kubectl get servicebindingusage numbers-redis-bindingfunction -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
 

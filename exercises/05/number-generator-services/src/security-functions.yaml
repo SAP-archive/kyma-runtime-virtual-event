@@ -48,6 +48,5 @@ spec:
     - path: /.*
       methods: ["GET"]
       accessStrategies:
-        - handler: oauth2_introspection
-          config:
-            required_scope: ["read"]
+        - handler: allow
+---

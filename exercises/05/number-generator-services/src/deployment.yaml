@@ -146,7 +146,6 @@ spec:
 
         returnArrayNumbers = JSON.stringify(generatedNumbers);
 
-
         //Use the new Redis Connection and insert the result of numbers into a list
         key = new Date().toISOString();
         client.set(key, returnArrayNumbers,
@@ -181,44 +180,28 @@ spec:
       "name": "numbers-history-service",
       "version": "1.0.0",
       "dependencies": {
-        "redis": "3.0.2"
+          "ioredis": "4.18"
       }
     }
   labels:
     app: numbers-history-service
   source: |
     module.exports = {
-          main: async function(event, context) {
-            const redis = require('redis');
+      main: async function(event, context) {
+        const Redis = require('ioredis');
 
-            const client = redis.createClient(
-                {host: process.env.REDIS_HOST,
-                 port: process.env.REDIS_PORT,
-                 password: process.env.REDIS_REDIS_PASSWORD
-                 }
-             );
+        const redis = new Redis({
+          port: process.env.REDIS_PORT,
+          host: process.env.REDIS_HOST,
+          password: process.env.REDIS_REDIS_PASSWORD
+        });
 
-            //Use the new Redis Connection and get the all keys to iterate and get the values
-            var history = [];
-            client.keys('*', function(err, keys) {
-              if (err) return console.log(err);
-              if (keys) {
-                for (var i=0; i < keys.length; i++){
-                  client.get(keys[i], function (error, value) {
-                    if (error) return console.log(error);
-                    var entry = {};
-                    entry['id'] = keys[i];
-                    entry['numbers'] = value;
-                    history.push(entry);
-                  });
-                }
+        const keys = await redis.keys('*');
+        const values = await redis.mget(keys);
 
-              }
-            });
-            console.log(history);
-            return JSON.stringify(history);
-          }
-        }
+        return JSON.stringify(values);
+      }
+    }
   minReplicas: 1
   maxReplicas: 1
   resources:
