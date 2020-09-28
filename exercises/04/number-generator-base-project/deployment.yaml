@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       # replace the repository URL with your own repository (e.g. {DockerID}/http-db-service:0.0.x for Docker Hub).
-      - image: dseverojr/number-generator:exercise23
+      - image: dseverojr/number-generator:exercise05
         imagePullPolicy: IfNotPresent
         name: number-generator
         ports:
@@ -52,6 +52,6 @@ spec:
           # available dbtypes are: [memory, mssql] if needed
           value: "memory"
       hostAliases:
-        - ip: "192.168.64.44"
+        - ip: "192.168.64.46"
           hostnames:
             - "oauth2.kyma.local"

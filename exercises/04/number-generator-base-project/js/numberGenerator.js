@@ -1,7 +1,7 @@
 // The lottery expects the player to pick 5 number + a so called powerball which gets generated sperately.
 // The generatedNumbers array represents the first 5 numbers.
-var client_id=atob('OWJiYmU0OGQtMTQ2ZC00NGUxLThjZDMtNTVhZGM0NmRiZjI0');
-var client_secret=atob('MkdQZkFFQ3QtcFJIZ1ppalZoSUltemhWOHI=');
+var client_id=atob('YmVmMzIyMTQtODk4OC00ODlkLWJjY2QtOTdkNTEwYzEwMTkz');
+var client_secret=atob('VVlLRzJ2NDc2ckxHNXNRT0J5b002eHVidjg=');
 var encodedData = btoa(client_id + ':' + client_secret);
 
 var urlToken = '/oauth2/token';

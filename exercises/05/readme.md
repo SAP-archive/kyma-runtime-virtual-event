@@ -45,11 +45,12 @@ spec:
 
 4. Type ```:wq``` and select the Enter key to save the changes.
 
-In the metadata above, we are defining a new AddonsConfiguration object to kyma.
+In the metadata section above, we are defining a new AddonsConfiguration object to kyma.
 * We have defined the name as *redis-addon* into the devktoberfest namespace
 * The definition of the redis service and provisioning is defined by the repositories tag, inside the spec, it is referring to the URL where the file index-testing.yaml file exists. 
 
-To deploy our new addon, let's use kubectl command as following:
+5. To deploy our new addon, let's use kubectl command as following:
+
 ```
 kubectl apply -f redisaddon.yaml -n devktoberfest
 ```
@@ -73,6 +74,11 @@ Let's create our new Redis service instance.
 
 Edit our redisaddon.yaml file, and append the following metadata to the bottom of the service.
 
+1. vim redisaddon.yaml
+2. Go to the bottom of the file
+3. select the **i** key to insert a new line at the top of the file.
+4. Add the following content to the end of the file
+
 ```yaml
 ---
 apiVersion: servicecatalog.k8s.io/v1beta1
@@ -92,18 +98,19 @@ With this spec section we have to Kyma, that our Redis instance will use the *mi
 
 > The name of the service can be whatever you want, but it makes sense to give it a name which represents what it is.   
 
-Type ```:wq``` and select the Enter key to save the changes.
+5. Type ```:wq``` and select the Enter key to save the changes.
 
 > Remember that we need to use *---* line as a separator between the objects declaration inside the yaml file
 
-Deploy the service instance to Kyma using the following command: 
+6. Deploy the service instance to Kyma using the following command: 
  
 ```
  kubectl apply -f redisaddon.yaml -n devktoberfest
  ```
 
-You can see the following output on the deployment
+7. You can see the following output on the deployment
 
+TODO: 
 ````shell script
 
 ````
