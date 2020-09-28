@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       # replace the repository URL with your own repository (e.g. {DockerID}/http-db-service:0.0.x for Docker Hub).
-      - image: dseverojr/number-generator:exercise05
+      - image: dseverojr/number-generator:exercise04
         imagePullPolicy: IfNotPresent
         name: number-generator
         ports:

@@ -1,0 +1,213 @@
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: number-generator-service
+  namespace: devktoberfest
+  labels:
+    app: number-generator-service
+    exercise: excercise04
+spec:
+  deps: |
+    {
+      "name": "number-generator-service",
+      "version": "1.0.0"      
+    }
+  labels:
+    app: number-generator-service
+  source: |
+    module.exports = {
+      main: function(event, context) {
+        var generatedNumber = Math.ceil(Math.random(0, 1) * 69).toString();
+        return generatedNumber;
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-generator-service
+  namespace: devktoberfest
+  labels:
+    app: numbers-generator-service
+    exercise: excercise04    
+spec:
+  deps: |
+    {
+      "name": "numbers-generator-service",
+      "version": "1.0.0",
+      "dependencies": {
+        "axios": "0.20",
+        "redis": "3.0.2"
+      }            
+    }
+  labels:
+    app: numbers-generator-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const axios = require('axios');
+        const redis = require('redis');
+
+        const client = redis.createClient(
+            {host: process.env.REDIS_HOST,
+             port: process.env.REDIS_PORT,
+             password: process.env.REDIS_REDIS_PASSWORD
+             }
+         );
+
+        const apiURL = 'http://number-generator-service.devktoberfest';
+
+        let generatedNumbers = [];
+        var numberOfInteractions = 5;
+      
+          for (i = 0; i < numberOfInteractions; i++) {
+            const response = await axios.get(apiURL).then(resp => {
+                generatedNumbers.push(resp.data);                  
+                return resp.data;
+            });
+        }
+
+        returnArrayNumbers = JSON.stringify(generatedNumbers);
+
+
+        //Use the new Redis Connection and insert the result of numbers into a list
+        key = new Date().toISOString();
+        client.set(key, returnArrayNumbers,
+            function(err, reply) {
+                console.log('Key: ' + key + ' inserted ' + reply);
+            });
+
+        return returnArrayNumbers;
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-generator-service
+  namespace: devktoberfest
+  labels:
+    app: numbers-generator-service
+    exercise: excercise04
+spec:
+  deps: |
+    {
+      "name": "numbers-generator-service",
+      "version": "1.0.0",
+      "dependencies": {
+        "axios": "0.20",
+        "redis": "3.0.2"
+      }
+    }
+  labels:
+    app: numbers-generator-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const axios = require('axios');
+        const redis = require('redis');
+
+        const client = redis.createClient(
+            {host: process.env.REDIS_HOST,
+             port: process.env.REDIS_PORT,
+             password: process.env.REDIS_REDIS_PASSWORD
+             }
+         );
+
+        const apiURL = 'http://number-generator-service.devktoberfest';
+
+        let generatedNumbers = [];
+        var numberOfInteractions = 5;
+
+          for (i = 0; i < numberOfInteractions; i++) {
+            const response = await axios.get(apiURL).then(resp => {
+                generatedNumbers.push(resp.data);
+                return resp.data;
+            });
+        }
+
+        returnArrayNumbers = JSON.stringify(generatedNumbers);
+
+        //Use the new Redis Connection and insert the result of numbers into a list
+        key = new Date().toISOString();
+        client.set(key, returnArrayNumbers,
+            function(err, reply) {
+                console.log('Key: ' + key + ' inserted ' + reply);
+            });
+
+        return returnArrayNumbers;
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-history-service
+  namespace: devktoberfest
+  labels:
+    app: numbers-history-service
+    exercise: excercise05
+spec:
+  deps: |
+    {
+      "name": "numbers-history-service",
+      "version": "1.0.0",
+      "dependencies": {
+          "ioredis": "4.18"
+      }
+    }
+  labels:
+    app: numbers-history-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const Redis = require('ioredis');
+
+        const redis = new Redis({
+          port: process.env.REDIS_PORT,
+          host: process.env.REDIS_HOST,
+          password: process.env.REDIS_REDIS_PASSWORD
+        });
+
+        const keys = await redis.keys('*');
+        const values = await redis.mget(keys);
+
+        return JSON.stringify(values);
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
