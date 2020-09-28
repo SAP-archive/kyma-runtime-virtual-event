@@ -110,15 +110,7 @@ With this spec section we have to Kyma, that our Redis instance will use the *mi
  kubectl apply -f redisaddon.yaml -n devktoberfest
  ```
 
-7. You can see the following output on the deployment
-
-TODO: 
-````shell script
-
-````
-
-8. Check the status of the service instance provisioning. This process can take more time, as it needs to download the image and configure everything.
-Type the command
+7. Check the status of the service instance provisioning. This process can take more time, as it needs to download the image and configure everything.
 
 ````shell script
 kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
@@ -175,10 +167,6 @@ of parsing the result using regular expression to filter the condition and statu
 
 The last condition in the status should be Ready equals True:
 
-TODO://
-````shell script
-
-````
 
 Great!! The ServiceBinding object is created .
 
@@ -229,13 +217,6 @@ The last condition in the status should be Ready equals True:
 ```shell script
  kubectl get secret numbers-redis-servicebinding -n devktoberfest -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
 ``` 
-
-You will be able to see the following output as result:
-
-TODO://
-````shell script
-
-````
  
 Let's get deeper into details of the configuration
 
@@ -433,13 +414,6 @@ Is a simple node.js code, listing all keys retrieved and pushing to the history 
  kubectl get function numbers-history-service -n devktoberfest
 ```
 
-The following ouput will be showed:
-TODO://
-````shell script
-
-````
-
-
 #### Bind the Redis Service instance with the new History service
 
 Our number-history service file is using the process.env properties to connect on our Redis service instance.
@@ -484,11 +458,6 @@ we are changing a new, because is that a new one, and the usedBy entry, telling 
  kubectl get numbers-redis-binding-history numbers-redis-bindingfunction -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
 ```
 
-
-TODO://
-````shell script
-
-````
 
 The *numbers-history-service* will be changed and redeployed with the new binding configuration. 
 
