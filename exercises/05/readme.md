@@ -561,6 +561,6 @@ Click on the button *Click Me* more than one time.
 Open a new browser window or a new tab and go to our new history service accessing the URL https://numbers-history-service.kyma.local/.
 Immediately the service will return the history of last numbers generated and your window should look like this:
 
-![kyma-runtime-virtual-event-05-06](kyma-runtime-virtual-event-05-04.png)
+![kyma-runtime-virtual-event-05-04](kyma-runtime-virtual-event-05-04.png)
 
 Congratulations!!! You have succeeded to the end of our exercise 5.
