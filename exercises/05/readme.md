@@ -68,7 +68,7 @@ To be able to use the service we need to create a new Service Instance of the ad
 
 Open the Kyma Console UI and go to the Menu Catalog -> AddOns, then you can see the Redis offer as the image below:
 
-![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
+![kyma-runtime-virtual-event-05-02](kyma-runtime-virtual-event-05-02.png)
 
 ### Create new Redis database instance
 
@@ -126,10 +126,6 @@ kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="
 
 The last condition to the resource status is "Ready equals True".
 If it is not ready yet, wait more seconds and execute the command again.
-
-Open the Kyma Console UI and go to the Menu Instance -> AddOns, then you can see the Redis instance created as the image below:
-
-![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
 
 
 ### Create Service Bind to the Redis Service
@@ -264,7 +260,7 @@ These variables, can be used in your lambda code, to connect to the Redis servic
 can provide to us, this flexibility on the configurations, and the secured that services have, no plain text password is stored or showed.
 
 
-![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
+![kyma-runtime-virtual-event-05-03](kyma-runtime-virtual-event-05-03.png)
 
 This variables, can be used in your lambda code, to connect to the Redis service, and consume the database. It's great to see how Kyma
 can provide to us, this flexibility on the configurations, and the secured that services has, no plan text password is stored or showed.
@@ -562,13 +558,9 @@ Excellent!! The configuration is ready. Let's test all services together.
 Open your preferred browser and go the webapp number-generator accessing the URL https://number-generator.kyma.local/.
 Click on the button *Click Me* more than one time.
 
-Your window should look like these:
-
-![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
-
 Open a new browser window or a new tab and go to our new history service accessing the URL https://numbers-history-service.kyma.local/.
 Immediately the service will return the history of last numbers generated and your window should look like this:
 
-![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
+![kyma-runtime-virtual-event-05-06](kyma-runtime-virtual-event-05-04.png)
 
 Congratulations!!! You have succeeded to the end of our exercise 5.
