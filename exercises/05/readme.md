@@ -273,7 +273,7 @@ Now, we are good to go, and change our lambda to connect on Redis Service.
  
 ### Change the Numbers Generator Service to store the history
 
-Let's edit our first deployment.yaml file created that contains our lambda services.
+Let's edit your first deployment.yaml file created that contains our lambda services.
 
 1. vim deployment.yaml
 2. Find for the numbers-generator-service
@@ -361,3 +361,168 @@ The key/value inserted on Redis generates simply logging of the result of the in
 The lambda service will start to Build, and deploy this new version.
 
 ### Create a new History Service Lambda 
+
+While the lambda is in the deployment process, let's assume that we can quickly test that our Redis is appropriately populated.
+The next step will create a new lambda function that just returns all the content of the Redis service instance.
+
+Let's edit your first deployment.yaml file created that contains our lambda services.
+
+1. vim deployment.yaml
+2. Go to the bottom of the file
+3. select the **i** key to insert a new line at the top of the file.
+4. Add the following content to the end of the file
+
+`````yaml
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: numbers-history-service
+  namespace: devktoberfest
+  labels:
+    app: numbers-history-service
+    exercise: excercise05
+spec:
+  deps: |
+    {
+      "name": "numbers-history-service",
+      "version": "1.0.0",
+      "dependencies": {
+          "ioredis": "4.18"
+      }
+    }
+  labels:
+    app: numbers-history-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const Redis = require('ioredis');
+
+        const redis = new Redis({
+          port: process.env.REDIS_PORT,
+          host: process.env.REDIS_HOST,
+          password: process.env.REDIS_REDIS_PASSWORD
+        });
+
+        const keys = await redis.keys('*');
+        const values = await redis.mget(keys);
+
+        return JSON.stringify(values);
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+`````
+
+In this new function, we are using the same Redis instance, creating a new client connection,
+after this, we execute the Redis command to retrieve all keys to start to iterate.
+Is a simple node.js code, listing all keys retrieved and pushing to the history Array, that at the end will be the return of the function
+
+5. Type ```:wq``` and select the Enter key to save the changes.
+
+6. Deploy the new numbers-history-service to Kyma using the following command: 
+```shell script
+ kubectl apply -f deployment.yaml -n devktoberfest
+```
+
+7. to show the function running lets use kubectl get function command
+```shell script
+ kubectl get function numbers-history-service -n devktoberfest
+```
+
+The following ouput will be showed:
+TODO://
+````shell script
+
+````
+
+
+#### Bind the Redis Service instance with the new History service
+
+Our number-history service file is using the process.env properties to connect on our Redis service instance.
+But until now, we didn't provide this bind to the number history service yet.
+
+Let's create this binding, in the same way as we did before, for the numbers-generator
+
+1. vim redisaddon.yaml
+2. Go to the bottom of the file
+3. select the **i** key to insert a new line at the top of the file.
+4. Add the following content to the end of the file
+
+````yaml
+apiVersion: servicecatalog.kyma-project.io/v1alpha1
+kind: ServiceBindingUsage
+metadata:
+  name: numbers-redis-binding-history
+  namespace: devktoberfest
+spec:
+  serviceBindingRef:
+    name: numbers-redis-servicebinding
+  usedBy:
+    kind: serverless-function
+    name: numbers-history-service
+  parameters:
+    envPrefix:
+      name: "REDIS_"
+````
+
+Here we have the same declaration of the ServiceBindingUsage object created before, but
+we are changing a new, because is that a new one, and the usedBy entry, telling Kyma to bind to our last number-history-service created
+
+5. Type ```:wq``` and select the Enter key to save the changes.
+
+6. Deploy the new ServiceBindUsage object to Kyma using the following command: 
+```shell script
+ kubectl apply -f redisaddon.yaml -n devktoberfest
+```
+
+7. to show the servicebindingusage status lets use kubectl  command
+```shell script
+ kubectl get numbers-redis-binding-history numbers-redis-bindingfunction -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
+```
+
+
+TODO://
+````shell script
+
+````
+
+The *numbers-history-service* will be changed and redeployed with the new binding configuration. 
+
+Great!!! One more step completed!!
+
+#### Expose the History Service to be publicly available
+
+Now the function is created, it is bound,  but not exposed yet. For the purpose of the exercise, let's configure the new service to be
+accessed without restrictions .
+
+In your command prompt, lets edit the file security-functions.yaml.
+
+Open file with vim, and the following lines at the end:
+
+With this configuration we are exposing the service with the name number-history-service, with not handlers, allowing any GET http connection
+
+Save the file and let's apply the new rule to the Kyma.
+Type the following command
+`````shell script
+ kubectl apply -f security-functions.yaml setting the namespace to devktoberfest.
+`````
+
+Done, it's created.
+
+Remember that, when you are working with minikube, any new service must be declared into your /etc/hosts file, to be able to be locally resolved.
+
+Open again your /etc/hosts file and let's add the new numbers-history-service to the minikube IP.
+
+
+Let's test it using curl command
+`````shell script
+ curl -ik https://numbers-history-service.kyma.local/
+`````
