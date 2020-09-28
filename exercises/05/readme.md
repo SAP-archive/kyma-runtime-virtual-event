@@ -534,7 +534,7 @@ With this configuration, we are exposing the service with the name number-histor
 
 6. Deploy the new APIRule object of the History Service to Kyma using the following command: 
 ```shell script
- kubectl apply -f security-functions.yaml setting the namespace to devktoberfest.
+ kubectl apply -f security-functions.yaml -n devktoberfest
 ```
 
 Done, new service already exposed!!! 
@@ -559,3 +559,16 @@ Excellent!! The configuration is ready. Let's test all services together.
 
 #### Testing all scenario
 
+Open your preferred browser and go the webapp number-generator accessing the URL https://number-generator.kyma.local/.
+Click on the button *Click Me* more than one time.
+
+Your window should look like these:
+
+![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
+
+Open a new browser window or a new tab and go to our new history service accessing the URL https://numbers-history-service.kyma.local/.
+Immediately the service will return the history of last numbers generated and your window should look like this:
+
+![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
+
+Congratulations!!! You have succeeded to the end of our exercise 5.
