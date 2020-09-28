@@ -500,29 +500,62 @@ Great!!! One more step completed!!
 
 #### Expose the History Service to be publicly available
 
-Now the function is created, it is bound,  but not exposed yet. For the purpose of the exercise, let's configure the new service to be
-accessed without restrictions .
+Now the function is created, it is bound,  but not exposed yet. For the exercise, let's configure the new service to be
+accessed without restrictions.
 
-In your command prompt, lets edit the file security-functions.yaml.
+Let`s edit the file security-functions.yaml.
 
-Open file with vim, and the following lines at the end:
+1. vim security-functions.yaml
+2. Go to the bottom of the file
+3. select the **i** key to insert a new line at the top of the file.
+4. Add the following content to the end of the file
 
-With this configuration we are exposing the service with the name number-history-service, with not handlers, allowing any GET http connection
+````yaml
+---
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: numbers-history-apirule
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  service:
+    name: numbers-history-service
+    port: 80
+    host: numbers-history-service
+  rules:
+    - path: /.*
+      methods: ["GET"]
+      accessStrategies:
+        - handler: allow
+````
+With this configuration, we are exposing the service with the name number-history-service, with no handlers, allowing any GET HTTP connection
 
-Save the file and let's apply the new rule to the Kyma.
-Type the following command
-`````shell script
+5. Type ```:wq``` and select the Enter key to save the changes.
+
+6. Deploy the new APIRule object of the History Service to Kyma using the following command: 
+```shell script
  kubectl apply -f security-functions.yaml setting the namespace to devktoberfest.
-`````
+```
 
-Done, it's created.
+Done, new service already exposed!!! 
 
 Remember that, when you are working with minikube, any new service must be declared into your /etc/hosts file, to be able to be locally resolved.
-
 Open again your /etc/hosts file and let's add the new numbers-history-service to the minikube IP.
 
+In the terminal still open execute the following commands:
 
-Let's test it using curl command
-`````shell script
+1. sudo vim /etc/hosts
+2. select the **i** key to insert a new line at the top of the file.
+3. Add the following line: ``` {YOUR.MINIKUBE.IP} numbers-history-service.kyma.local ```
+4. Type ```:wq``` and select the Enter key to save the changes.
+
+To verify everything worked just fine we can try to curl our service deployment:
+
+```shell script
  curl -ik https://numbers-history-service.kyma.local/
-`````
+```
+
+Excellent!! The configuration is ready. Let's test all services together.
+
+#### Testing all scenario
+
