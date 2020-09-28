@@ -70,6 +70,8 @@ Open the Kyma Console UI and go to the Menu Catalog -> AddOns, then you can see 
 
 ![kyma-runtime-virtual-event-05-01](kyma-runtime-virtual-event-05-01.png)
 
+### Create new Redis database instance
+
 Let's create our new Redis service instance.
 
 Edit our redisaddon.yaml file, and append the following metadata to the bottom of the service.
@@ -114,3 +116,69 @@ TODO:
 ````shell script
 
 ````
+
+Check the status of the service instance provisioning. This process can take more time, as it needs to download the image and configure everything.
+Type the command
+
+````shell script
+kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
+````
+
+The last condition to the resource status is "Ready equals True".
+If it is not ready yet, wait more seconds and execute the command again.
+
+
+### Create Service Bind to the Redis Service
+
+After the provisioning of a new Redis instance service, is needed to have a ServiceBinding Kyma object, that is 
+responsible to bound this Redis instance with any other services that you have created.
+
+Edit our redisaddon.yaml file, and append the following metadata to the bottom of the service.
+
+1. vim redisaddon.yaml
+2. Go to the bottom of the file
+3. select the **i** key to insert a new line at the top of the file.
+4. Add the following content to the end of the file
+
+```yaml
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: numbers-redis-servicebinding
+  namespace: devktoberfest
+spec:
+  instanceRef:
+    name: numbers-redis-service
+``` 
+5. Type ```:wq``` and select the Enter key to save the changes.
+
+6. Deploy the service binding to Kyma using the following command: 
+ 
+```
+ kubectl apply -f redisaddon.yaml -n devktoberfest
+```
+
+This deployment descriptor, create a new object of kind ServiceBinding.
+The metadata section, defined the name of the object as *number-redis-servicebinding*. 
+In the spec section, the instanceRef tag was referred with the name of the Redis Service that we have created before, *number-redis-service*
+
+6. Deploy the service binding to Kyma using the following command: 
+ 
+```
+ kubectl get servicebinding numbers-redis-servicebinding -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
+ ```
+
+This *kubectl get* command, has defined that the output will be in the json format, this can facilitate the process
+of parsing the result using regular expression to filter the condition and status attributes.
+
+The last condition in the status should be Ready equals True:
+
+TODO://
+````shell script
+
+````
+
+Great!! The ServiceBinding object is created .
+
+
