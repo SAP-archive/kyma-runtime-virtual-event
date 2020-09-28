@@ -271,4 +271,93 @@ can provide to us, this flexibility on the configurations, and the secured that 
 
 Now, we are good to go, and change our lambda to connect on Redis Service.
  
-### Change the Numbers Generator Service to store the history 
+### Change the Numbers Generator Service to store the history
+
+Let's edit our first deployment.yaml file created that contains our lambda services.
+
+1. vim deployment.yaml
+2. Find for the numbers-generator-service
+3. select the **i** key to insert a new line at the top of the file.
+4. Change the *spec* section to looks like this
+
+````yaml
+spec:
+  deps: |
+    {
+      "name": "numbers-generator-service",
+      "version": "1.0.0",
+      "dependencies": {
+        "axios": "0.20",
+        "redis": "3.0.2"
+      }
+    }
+  labels:
+    app: numbers-generator-service
+  source: |
+    module.exports = {
+      main: async function(event, context) {
+        const axios = require('axios');
+        const redis = require('redis');
+
+        const client = redis.createClient(
+            {host: process.env.REDIS_HOST,
+             port: process.env.REDIS_PORT,
+             password: process.env.REDIS_REDIS_PASSWORD
+             }
+         );
+
+        const apiURL = 'http://number-generator-service.devktoberfest';
+
+        let generatedNumbers = [];
+        var numberOfInteractions = 5;
+
+          for (i = 0; i < numberOfInteractions; i++) {
+            const response = await axios.get(apiURL).then(resp => {
+                generatedNumbers.push(resp.data);
+                return resp.data;
+            });
+        }
+
+        returnArrayNumbers = JSON.stringify(generatedNumbers);
+
+        //Use the new Redis Connection and insert the result of numbers into a list
+        key = new Date().toISOString();
+        client.set(key, returnArrayNumbers,
+            function(err, reply) {
+                console.log('Key: ' + key + ' inserted ' + reply);
+            });
+
+        return returnArrayNumbers;
+      }
+    }
+  minReplicas: 1
+  maxReplicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+````
+
+5. Type ```:wq``` and select the Enter key to save the changes.
+
+6. Deploy the changes of our Lambda Service to Kyma using the following command: 
+ 
+```shell script
+ kubectl apply -f deployment.yaml -n devktoberfest
+```
+
+Let's analyze the code per sections:
+* In the dependencies, we have set a new entry to the redis library version 3.0.2, it allows to create a client connection with the Redis instance.
+* In the source code we have created the following blocks
+    * Object *redis* that is declared requiring the *redis* library
+    * Object *client* using the method *redis.createClient()* using the ServiceBinding secret/credentials that were previously injected to this lambda, the HOST, PORT, PASSWORD are used to create a physical connection to our Redis instance 
+    * At the end of code block, the object *client* is used to call the method *set()* storing the last numbers generated into the Redis database. For the example purpose, a new Date() is stored as a key for this record.
+
+The key/value inserted on Redis generates simply logging of the result of the insertion.
+
+The lambda service will start to Build, and deploy this new version.
+
+### Create a new History Service Lambda 
