@@ -1,4 +1,4 @@
-# Run Project "Kyma" on a hyperscaler
+# Run Project "Kyma" on a Hyperscaler
 
 **This enablement content is for Devtoberfest Week 7: 05 October → 09 October 2020.**
 
