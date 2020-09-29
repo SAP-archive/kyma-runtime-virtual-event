@@ -33,9 +33,6 @@ This session references deploying Gardener and Kyma on your own, but if you are 
 Here is the section where your active gardener cluster allows you to access external tools, in this case a catalog of application choices.
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/gardener_cluster_external_service_catalog.png)
 
-Once you have deployed Gardner and Kyma you will have the ability to deploy applications and monitor the status of your clusters.  
-![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_catalog_tile_choice.png)
-
 After selecting the Kyma tile from the App page you will be taken to a deployment section, click on the deploy button.  
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_catalog_deploy_description.png)
 
@@ -51,5 +48,7 @@ There will be a few lines of status that hide things like the random login passw
 Once your Kyma system is deployed your deployment screen will show all the Kyma components that were installed.  You will then be able to login to the console and deploy applications, add user roles, etc. onto your cluster.
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_apps_on_gardener_cluster.png)
 
+Once you have deployed Gardner and Kyma you will have the ability to deploy applications and monitor the status of your clusters.  
+![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_namspace_workload_status.png)
 
 Good luck and have fun!
