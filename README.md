@@ -36,7 +36,7 @@ Here's an overview of the exercises.
 - [Exercise 02 - Run Kyma on a Hyperscaler](https://youtu.be/223hOXBnpoc)
 - [Exercise 03 - Deploy to the Kyma runtime](https://youtu.be/GnXg9pkj8CU)
 - [Exercise 04 - Expose your Service through an Oauth2 secured API](https://youtu.be/CUYam3HicNU)
-- [Exercise 05 - Create extensions to get Additional Services]()
+- [Exercise 05 - Create extensions to get Additional Services](https://youtu.be/0WnB3ZnSPjA)
 - [Exercise 06 - Prepare your Kyma environment for Scale](https://youtu.be/bH2TQ2irG6g)
 
 ## Requirements
