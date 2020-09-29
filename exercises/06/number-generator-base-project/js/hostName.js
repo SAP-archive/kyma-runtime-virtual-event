@@ -6,7 +6,8 @@ const getHostName = () => {
         .then((info) => {
             console.log('info', info);
             let infoJson = JSON.parse(info);
-            document.getElementById('hostname').innerText = "Hostname: " + infoJson.hostname;
+            document.getElementById('hostname').innerText = "Hostname: " + infoJson.hostname + ", request count: " + infoJson.numRequests;
+            addOrUpdateHistogramById(infoJson.hostname, infoJson.values, infoJson.numRequests); // TODO add values
             return infoJson.hostname;
         })
         .catch((error) => {

@@ -10,21 +10,35 @@
     <script src="js/numberGenerator.js"></script>
     <script src="js/restUtils.js"></script>
     <script src="js/hostName.js"></script>
+    <script src="js/histogramUtils.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
     <div id="body">
         <div id="content">
             <h1 class="text">Lottery Quick Pick</h1>
             <h2 class="text">Just as fast as a scratch ticket.</h2>
             <br>
-            <button onclick="giveWinningNumbers()">Click me</button>
+            <button onclick="giveWinningNumbersRest(); getHostName()">Click me</button>
+            <button onclick="startNumbersLoop();">Click me for conntiuous number stream</button>
+            <button onclick="stopNumbersLoop();">stop number stream</button>
+
             <script src="/js/numberGenerator.js"></script>
             <br> Numbers:
             <label id="baseNumbersLabel"></label>
             <br>
             <label id="pNumberLabel"></label>
             <br>
+            <br>
+            <br>
+            <h3>How often are the numbers drawn by instance in "Replica Set"?</h3>
+            <table>
+                
+                <tr id="histogramRow">
+                    
+                </tr>
+            </table>
         </div>
         <div id="footer">
-            <a href="https://kyma-project.io/"><button class="footer">project: Kyma</button></a>
+             <a href="https://kyma-project.io/"><button class="footer">project: Kyma</button></a>
             <button onclick="getHostName()" class="footer" id="hostname">Hostname</button>
         </div>
     </div>
