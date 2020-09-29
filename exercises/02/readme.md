@@ -45,10 +45,10 @@ You will then need to scroll to the bottom of the page and click on submit.
 There will be a few lines of status that hide things like the random login password for your Kyma console.  
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_login_user.png)
 
-Once your Kyma system is deployed your deployment screen will show all the Kyma components that were installed.  You will then be able to login to the console and deploy applications, add user roles, etc. onto your cluster.
+Once your Kyma system is deployed your deployment screen will show all the Kyma components that were installed.
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_apps_on_gardener_cluster.png)
 
-Once you have deployed Gardner and Kyma you will have the ability to deploy applications and monitor the status of your clusters.  
+After that, you can login to the console and deploy applications, add user roles, etc. onto your cluster. When you have deployed Gardner and Kyma you will have the ability to deploy applications and monitor the status of your clusters.  
 ![](https://github.com/SAP-samples/kyma-runtime-virtual-event/blob/master/exercises/02/kyma_namspace_workload_status.png)
 
 Good luck and have fun!
