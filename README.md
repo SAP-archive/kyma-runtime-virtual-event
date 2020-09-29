@@ -31,16 +31,13 @@ If you finish an exercise early, please resist the temptation to continue with t
 
 Here's an overview of the exercises.
 
-- [Exercise 01 - Setup a local Kyma installment]()
-- [Exercise 02 - Run Kyma on a Hyper-Scaler]()
-- [Exercise 03 - Deploy to the Kyma runtime]()
-- [Exercise 04 - Expose your Service through an Oauth2 secured API]()
+- [Introduction](https://youtu.be/4tWH3Jl9Pss)
+- [Exercise 01 - Setup a local Kyma installment](https://youtu.be/dU6ICrGswUs)
+- [Exercise 02 - Run Kyma on a Hyperscaler](https://youtu.be/223hOXBnpoc)
+- [Exercise 03 - Deploy to the Kyma runtime](https://youtu.be/GnXg9pkj8CU)
+- [Exercise 04 - Expose your Service through an Oauth2 secured API](https://youtu.be/CUYam3HicNU)
 - [Exercise 05 - Create extensions to get Additional Services]()
-- [Exercise 06 - Prepare your Kyma environment for Scale]()
-
-### Further experimentation
-
-Emptiness
+- [Exercise 06 - Prepare your Kyma environment for Scale](https://youtu.be/bH2TQ2irG6g)
 
 ## Requirements
 
@@ -48,7 +45,7 @@ The requirements to follow the exercises in this repository, including hardware 
 
 ## Download and installation
 
-You do not need to download this repository nor install anything from it. You can just follow the exercises by visiting each of them as listed in the [exercises](https://github.wdf.sap.corp/d061070/kyma-runtime-virtual-event/tree/master/exercises) section.
+You do not need to download this repository nor install anything from it. You can just follow the exercises by visiting each of them as listed in the [exercises](https://github.com/SAP-samples/kyma-runtime-virtual-event/tree/master/exercises) section.
 
 ## How to obtain support
 
