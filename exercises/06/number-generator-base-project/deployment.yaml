@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: number-generator
+  labels:
+    example: number-generator
+    app: number-generator
+spec:
+  ports:
+  - name: http
+    port: 8017
+  selector:
+    app: number-generator
+    example: number-generator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: number-generator
+  labels:
+    example: number-generator
+    app: number-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: number-generator
+      example: number-generator
+  template:
+    metadata:
+      labels:
+        app: number-generator
+        example: number-generator
+    spec:
+      containers:
+      # replace the repository URL with your own repository (e.g. {DockerID}/http-db-service:0.0.x for Docker Hub).
+      - image: sebastianmahr/numbergenerator:latest
+        imagePullPolicy: Always #IfNotPresent
+        name: number-generator
+        ports:
+        - name: http
+          containerPort: 8017
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            memory: 32Mi
+        env:
+        - name: dbtype
+          # available dbtypes are: [memory, mssql] if needed
+          value: "memory"
+
