@@ -5,7 +5,7 @@
 ## Introduction - Scenario
 In this exercise, you will get introduced to the Serverless functionality of Kyma and how to expose them via OAuth2 secured API. 
 This exercise will continue to use our web application, created in the previous activity, modifying it, replacing the local functions to call the new Kyma Serverless Services exposed.
-Exercise 4 also generated a ready to use Docker image of the web application, leading you to focus on the Kyma activities.
+Exercise 4 also generates a ready to use Docker image of the web application, leading you to focus on the Kyma activities.
 
 The goal is to create new Serverless functions and secure them via OAuth2 API using your *project: "Kyma"* installation.
 
@@ -33,7 +33,7 @@ The previous exercise has two functions, that are:
 
 We will create two new services, one for each of them, in Kyma using the Serverless Lambda functions.
 
-Let's create our new YAML in the src folder, containing the new service file! - Use your CLI to navigate to the project base and create a file called *deployment.yaml*:
+Let's create our new YAML in the src folder, containing the new service file! - Use your CLI to navigate to the project base and create a file called *deployment.yaml*
 
 ```
 touch deployment.yaml
@@ -76,10 +76,10 @@ spec:
       memory: 100Mi
 ---
 ```
-Here we define the API version, w**hich in this case, is related to the serverless API of Kyma. The following information determines Kyma to the provision of the new service:
-- metadata containing the name of the new service, labels, and app selector
+Here we define the API version, which in this case, is related to the serverless API of Kyma. The following information determines Kyma to the provision of the new service:
+- Metadata containing the name of the new service, labels, and app selector
 - Specs include the core information to create this new service. The source uses javascript with the syntax of Node.js programming language. Declare any external library that your code consumes into the deps section. This example does not call any external library, but use a descriptor declaration for the service, as a good practice for documentation
-- resources and scaling are applied to the Kyma provisioning and allows Kyma to limit resource utilization 
+- Resources and scaling are applied to the Kyma provisioning and allows Kyma to limit resource utilization 
 
 As you can see, the source code used in this Serverless function is the same previously implemented on the web app, but now is exposed as a service and reusable.
 Let's deploy the service.
@@ -249,7 +249,7 @@ spec:
  
 ### Expose both services via OAuth2
 
-We've just seen the magic happens; a simple YAML file can be ready to be consumed by the other applications and systems without any additional infrastructure concern. Kyma has made all for you.
+We've just seen the magic happens; a simple YAML file can be ready to be consumed by the other applications and systems without any additional infrastructure concern. Kyma has made all of this possible for you.
 Until now, any internal Serverless function or microservice can make calls to our new services, but they are still not published to the external systems.
 This section will present to you how to configure our services to be exposed and secured via OAuth2.
 
@@ -319,7 +319,7 @@ One more thing before we can start interacting with our services APIs when runni
 In the terminal opened, execute the following commands:
 
 1. sudo vim /etc/hosts
-2. select the **i** key to insert a new line at the top of the file.
+2. Select the **i** key to insert a new line at the top of the file.
 3. Add the following line: ``` {YOUR.MINIKUBE.IP} number-generator-service.kyma.local ```
 4. Add the following line: ``` {YOUR.MINIKUBE.IP} numbers-generator-service.kyma.local ```
 5. Type ```:wq``` and select the Enter key to save the changes.
