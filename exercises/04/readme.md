@@ -103,7 +103,7 @@ number-generator-service   True         True    True      1         48s
 ```
 
 As soon as you can see a new service Running, it is available to be consumed by any Kyma internal system, another Serverless or microservices deployed and running in the same namespace.
-By default, Kyma will provide the service using the following DNS composition <service-name>.<kyma-cluster-dns>. For local scenarios using minikube, this service is available via http://poweball-generator.kyma.local, or the name of the service using the namespace as DNS, for example, http://poweball-generator.devktoberfest, both will be running locally at HTTP port 80. 
+By default, Kyma will provide the service using the following DNS composition <service-name>.<kyma-cluster-dns>. For local scenarios using minikube, this service is available via http://number-generator-service.kyma.local, or the name of the service using the namespace as DNS, for example, http://number-generator-service.devktoberfest, both will be running locally at HTTP port 80. 
 
 Since the number generation service is now available for internal consumption, let's create the service that provides five random numbers, consuming precisely this service that we just created.
 
