@@ -3,15 +3,15 @@
 
 
 ## Introduction - Scenario
-In this exercise you will get introduced to the Serverless functionality of Kyma and how to expose them via OAuth2 secured API. 
-This exercise will continue to use our web application created in the previous exercise, it will be modified replacing the local functions to call the new Kyma Serverless Services exposed.
-The exercise 4, also generated a ready to use Docker image of the web application, which can led you to focus on the Kyma activities
+In this exercise, you will get introduced to the Serverless functionality of Kyma and how to expose them via OAuth2 secured API. 
+This exercise will continue to use our web application, created in the previous activity, modifying it, replacing the local functions to call the new Kyma Serverless Services exposed.
+Exercise 4 also generated a ready to use Docker image of the web application, leading you to focus on the Kyma activities.
 
 The goal is to create new Serverless functions and secure them via OAuth2 API using your *project: "Kyma"* installation.
 
 ### You Will Learn How to: 
 
-- Create an Serverless service in the *project: "Kyma"*
+- Create a Serverless service in the *project: "Kyma"*
 - Create an OAuth2 client credentials
 - Configure a Serverless service to be authenticated using OAuth2 
 
@@ -27,13 +27,13 @@ The new project folder will have a structure like the following:
 
 ### Create the deployment.yaml for the new services Kyma deployment
 
-Previous exercise has two functions that are:
-- generateNumber: Responsible to generate a random number
-- generate: Responsible to generate five numbers, reutilizing the generateNumber function 
+The previous exercise has two functions, that are:
+- generate number: Responsible to generate a random number
+- generate: Responsible to generate five numbers, reutilizing the generated number function 
 
 We will create two new services, one for each of them, in Kyma using the Serverless Lambda functions.
 
-Let's create our new yaml in the src folder, containing the new service file! - Use your CLI to navigate to the project base and create a file called *deployment.yaml*:
+Let's create our new YAML in the src folder, containing the new service file! - Use your CLI to navigate to the project base and create a file called *deployment.yaml*:
 
 ```
 touch deployment.yaml
@@ -78,20 +78,20 @@ spec:
 ```
 Here we define the API version, w**hich in this case, is related to the serverless API of Kyma. The following information determines Kyma to the provision of the new service:
 - metadata containing the name of the new service, labels, and app selector
-- Specs contain the core information to create this new service. The source uses javascript with the syntax of Node.js programming language. Declare any external library that your code consumes into the deps section. This example does not call any external library, but use a descriptor declaration for the service, as a good practice for documentation
+- Specs include the core information to create this new service. The source uses javascript with the syntax of Node.js programming language. Declare any external library that your code consumes into the deps section. This example does not call any external library, but use a descriptor declaration for the service, as a good practice for documentation
 - resources and scaling are applied to the Kyma provisioning and allows Kyma to limit resource utilization 
 
 As you can see, the source code used in this Serverless function is the same previously implemented on the web app, but now is exposed as a service and reusable.
 Let's deploy the service.
 
-Create the new resources using the following commands that defined the namespace devktoberfest:
+Create new resources using the following commands that defined the namespace devktoberfest:
 
 ```
 kubectl apply -f deployment.yaml -n devktoberfest
 ```
 
 Kyma will provision a new Pod containing your function.
-To monitor the state of the new service you can use the following kubectl command:
+To monitor the state of the new service, you can use the following kubectl command:
 
 ```
 kubectl get functions number-generator-service -n devktoberfest
@@ -105,7 +105,7 @@ number-generator-service   True         True    True      1         48s
 As soon as you can see a new service Running, it is available to be consumed by any Kyma internal system, another Serverless or microservices deployed and running in the same namespace.
 By default, Kyma will provide the service using the following DNS composition <service-name>.<kyma-cluster-dns>. For local scenarios using minikube, this service is available via http://poweball-generator.kyma.local, or the name of the service using the namespace as DNS, for example, http://poweball-generator.devktoberfest, both will be running locally at HTTP port 80. 
 
-Since the number generation service is now available for internal consumption, let's create the service that provides 5 random numbers, consuming exactly this service that we just created.
+Since the number generation service is now available for internal consumption, let's create the service that provides five random numbers, consuming precisely this service that we just created.
 
 Open the same deployment.yaml file and add the following lines to the end:
 
@@ -158,12 +158,12 @@ spec:
 ---
 ```
 
-Let's analyse the small difference between this new numbers-generator-service service and the previous one.
+Let's analyze the small difference between this new numbers-generator-service service and the previous one.
 The numbers-generator-service add two small changes:
-_ Add a section "dependencies" inside the spec section, and put the library Axios that be available for consumption inside the service.
-- In the source section, you are able to see the URL for the number-generator-service service declared and being consumed 5 times in a loop
+_ Add a section "dependencies" inside the spec section and put the library Axios that be available for consumption inside the service.
+- In the source section, you can see the URL for the number-generator-service service declared and being consumed five times in a loop
 
-The last call of the lambda transforms the content of the Array variable into JSON format to be consumed by our web app lately.
+The last call of the lambda transforms the Array variable's content into JSON format to be consumed by our web app lately.
 
 Your *deployment.yaml* should look like this now:   
 
@@ -253,7 +253,7 @@ We've just seen the magic happens; a simple YAML file can be ready to be consume
 Until now, any internal Serverless function or microservice can make calls to our new services, but they are still not published to the external systems.
 This section will present to you how to configure our services to be exposed and secured via OAuth2.
 
-Let's create our new yaml in the src folder, but with different names, like the authentication mode of the services, do not interfere with the source code or behavior! - Use your CLI to navigate to the project base and create a file called *security-functions.yaml*:
+Let's create our new YAML in the src folder, but with different names, like the services' authentication mode, do not interfere with the source code or behavior! - Use your CLI to navigate to the project base and create a file called *security-functions.yaml*:
 
 The purpose of the new YAML files is to create objects of kind APIRule, that will be applied to our services and guarantee their authentication mode.
 
@@ -314,9 +314,9 @@ Now Kyma has exposed both services using HTTPS protocol with OAuth2 authenticati
 
 We tell *kubectl* to create a new deployment using the *security-functions.yaml* for the *-n* namespace called **devktoberfest**.  
 
-One more thing before we can actually start interacting with our services APIs when running on local Kyma would be to edit your **/etc/hosts** file. Here we can put in the newly created **number-generator-service.kyma.local** and **numbers-generator-service.kyma.local** host.
+One more thing before we can start interacting with our services APIs when running on local Kyma would be to edit your **/etc/hosts** file. Here we can put in the newly created **number-generator-service.kyma.local** and **numbers-generator-service.kyma.local** host.
 
-In the terminal still open execute the following commands:
+In the terminal opened, execute the following commands:
 
 1. sudo vim /etc/hosts
 2. select the **i** key to insert a new line at the top of the file.
@@ -324,27 +324,27 @@ In the terminal still open execute the following commands:
 4. Add the following line: ``` {YOUR.MINIKUBE.IP} numbers-generator-service.kyma.local ```
 5. Type ```:wq``` and select the Enter key to save the changes.
 
-To verify that everything worked just fine we can try to curl our service deployment:
+To verify that everything worked just fine, we can try to curl our service deployment:
 
 ```
 curl -ik https://number-generator-service.kyma.local/
 curl -k https://numbers-generator-service.kyma.local/
 ```
 
-Also you should be able to open the website in your browser.
+Also, you should be able to open the website in your browser.
 
 You will see the following response for each service:
 
-The new services are exposed, but controlled by authentication service. Let's work on that on the next section.
+The new services are exposed but controlled by the authentication service. Let's work on that in the next section.
 
 ![kyma-runtime-virtual-event-04-02](kyma-runtime-virtual-event-04-02.png)
 
 
 ### Creating  OAuth2 Client Credentials
 
-You are almost there!!! You have created the services, exposed them, have tried to use it, but fail, because you still don't have credentials to do that.
+You are almost there!!! You have created the services, exposed them, have tried to use it, but fail because you still don't have the credentials to do that.
 
-In this section we will present to you, how to create the OAuth2 Client Credentials and how to use them to get access to your new Services exposed.
+This section will present to you how to create the OAuth2 Client Credentials and how to use them to get access to your new Services exposed.
 
 Once again, we will practice creating YAML files to create a new OAuth2Client object in the Kyma cluster.
 As the client credential is related to a configuration, let's create the YAML file inside the folder config with the name credentials.yaml.
@@ -367,9 +367,9 @@ spec:
   secretName: number-generator-client
 ```
 
-For this exercise we are creating a new OAuth2Client with the name *number-generator-client*
+For this exercise, we are creating a new OAuth2Client with the name *number-generator-client*
 
-When you create a new OAuth2Client you can also provides the client_id and the client_secret, for the purpose of this exercise, we will let Kyma generate a secured keys.
+When you create a new OAuth2Client, you can also provide the client_id and the client_secret; for this exercise, we will let Kyma generate secured keys.
 
 Let's apply the configuration to create the new OAuth2Client. Go to your CLI and execute the following command:
 
@@ -379,12 +379,12 @@ kubectl apply -f credentials.yaml
 
 #### Testing the credentials with the services
 
-In this final step we gonna show you, how to obtain the client_id and client_secret generated by Kyma when you have created the OAuth2Client, as also, test the new Serverless functions authenticating them using the credentials.
-Kyma provides via kubectl to get secret from specific name and namespace
+In this final step, we will show you how to obtain the client_id and client_secret generated by Kyma when you have created the OAuth2Client and test the new Serverless functions authenticating them using the credentials.
+Kyma provides via kubectl to get secret from a specific name and namespace.
 
-Go to your CLI and let's retrieve the generated keys for the OAuth2Client.
+Go to your CLI, and let's retrieve the generated keys for the OAuth2Client.
 
-1. Export as environment variables, the client name, namespace and domain that the OAuth2Client was create, like follows: 
+1. Export as environment variables, the client name, namespace, and domain that the OAuth2Client created as follows: 
 
 ```
 export CLIENT_NAME=number-generator-client
@@ -400,11 +400,11 @@ export CLIENT_SECRET="$(kubectl get secret -n $CLIENT_NAMESPACE $CLIENT_NAME -o 
 export ENCODED_CREDENTIALS=$(echo -n "$CLIENT_ID:$CLIENT_SECRET" | base64)
 ```
 
-The command above uses the *-o jsonpath='{.data.client_id}'* that indicates to kyma that the output of the descriptor will be in the JSON format and will parse the attribute data.client_id.
-With the same command the client_secret is retrieved from the OAuth2Client descriptor.
+The command above uses the *-o jsonpath='{.data.client_id}'* that indicates to kyma that the descriptor's output will be in the JSON format and will parse the attribute data.client_id.
+With the same command, retrieve the client_secret from the OAuth2Client descriptor.
 
-Kyma has the oauth2/token service API to authenticate and return you Bearer token that can be used in any other Serverlerss function that needs the OAuth2 authentication.
-To generate  the credentials, the command is transforming the <client_id:client_secret> into base64 enconding and storing in the environment variable.
+Kyma has the oauth2/token service API to authenticate and return you Bearer token to be used in any other Serverless function that needs the OAuth2 authentication.
+The command transforms the <client_id:client_secret> into base64, encoding, and storing in the environment variable to generate the credentials.
 
 3. With the encoded credential in hands, let's call the Kyma OAuth2 service API to authenticate then. Execute the following command:
 
@@ -413,17 +413,16 @@ export TOKEN=$(curl -s -X POST "https://oauth2.$DOMAIN/oauth2/token" -H "Authori
 echo $TOKEN
 ```
  
-4. Now we have the proper Bearer token valid and authenticated, it has an expiration time and you can immediately call our serverlerss functions as showing below:
+4. Now we have the proper Bearer token valid and authenticated, it has an expiration time, and you can immediately call our serverless functions as showing below:
 
  ```
 curl -ik -X GET https://numbers-generator-service.$DOMAIN/ -H "Authorization: bearer $TOKEN"
 curl -ik -X GET https://number-generator-service.$DOMAIN/ -H "Authorization: bearer $TOKEN"
  ```
 
-And you get to the final of the exercise 4 achieving all the initial goals that we have proposed.
-The ````curl```` command uses the Bearer token to call our exposed services and the results are the execution of the randon code that we previously created
+And you get to the final of exercise 4, achieving all the initial goals that we have proposed.
+The ````curl```` command uses the Bearer token to call our exposed services, and the results are the execution of the random code that we previously created.
 
-For validate all the exercises using our webapp, use our Docker image provided with the proper adapations. 
+To validate all the exercises using our web app, use our Docker image provided with the proper adaptations. 
 
-With this process, you have successfully completed the exercise 4, congratulations!!
-
+With this process, you have completed the exercise 4. Congratulations!!
