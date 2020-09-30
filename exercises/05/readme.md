@@ -29,7 +29,7 @@ touch redisaddon.yaml
 ```
 
 1. vim redisaddon.yaml
-2. select the **i** key to insert a new line at the top of the file.
+2. Select the **i** key to insert a new line at the top of the file.
 3. Add the following content to the file
 
 ```yaml 
@@ -64,7 +64,7 @@ kubectl get addons redis-addon -n devktoberfest -o=jsonpath="{.status.phase}"
 ```
 
 The *status.phase* must be equal to *Ready* to start to use.
-No, we have added to our AddOn catalog an offer of a Redis service.
+Now, we have added to our AddOn catalog an offer of a Redis service.
 To use the service, we need to create a new Service Instance of the Addon and bind it to our lambda services.
 
 Open the Kyma Console UI and go to the Menu Catalog -> AddOns, then you can see the Redis offer as the image below:
@@ -79,7 +79,7 @@ Edit our redisaddon.yaml file, and append the following metadata to the bottom o
 
 1. vim redisaddon.yaml
 2. Go to the bottom of the file
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Add the following content to the end of the file
 
 ```yaml
@@ -96,7 +96,7 @@ spec:
     imagePullPolicy: Always
 ``` 
 
-Kyma provision a new Service Instance of our Addon with the name number-redis-service inside the devktoberfest namespace.
+Kyma provisions a new Service Instance of our Addon with the name number-redis-service inside the devktoberfest namespace.
 With this spec section we have to Kyma, our Redis instance will use the *micro* service plan, which means an in-memory persistence.  
 
 > The service's name can be whatever you want, but it makes sense to give it a name representing what it is.      
@@ -118,19 +118,19 @@ kubectl get serviceinstance numbers-redis-service -n devktoberfest -o=jsonpath="
 ````
 
 The last condition to the resource status is "Ready equals True".
-If it is not ready yet, wait more seconds and execute the command again.
+If it is not ready yet, wait a few more seconds and execute the command again.
 
 
 ### Create Service Bind to the Redis Service
 
-After the provisioning of a new Redis instance service, is needed to have a ServiceBinding Kyma object, that is 
-responsible for bound this Redis instance with any other services that you have created.
+After the provisioning of a new Redis instance service, you need to have a ServiceBinding Kyma object, that is 
+responsible to bound this Redis instance with any other services that you have created.
 
 Edit our redisaddon.yaml file, and append the following metadata to the bottom of the service.
 
 1. vim redisaddon.yaml
 2. Go to the bottom of the file
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Add the following content to the end of the file
 
 ```yaml
@@ -152,8 +152,8 @@ spec:
  kubectl apply -f redisaddon.yaml -n devktoberfest
 ```
 
-This deployment descriptor, create a new object of kind ServiceBinding.
-The metadata section, defined the name of the object as *number-redis-servicebinding*. 
+This deployment descriptor creates a kind o object, ServiceBinding.
+The metadata section defined the name of the object as *number-redis-servicebinding*. 
 The spec section referred the instanceRef tag  with the name of the Redis Service that we have created before, *number-redis-service*
 
 
@@ -176,7 +176,7 @@ We have created the Service Binding object, that now is attached to the Redis Se
 
 1. vim redisaddon.yaml
 2. Go to the bottom of the file
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Add the following content to the end of the file
 
 ```yaml
@@ -229,7 +229,7 @@ This combination will make Kyma, which defines how Secrets(credentials to connec
 We still have the spec.parameters.envPrefix.name field, that is optional, but we are adding the prefix as REDIS_ in this exercise,
 it will add this prefix to all environment variables injected into the Secret into our Serverless function when creating a new ServiceBinding
 
-Everything is OK!! You have created the ServiceBindingUsage object; now, our numbers-generator-service lambda can use and consume the Redis instance.
+Everything is OK!! You have created the ServiceBindingUsage object; now our numbers-generator-service lambda can use and consume the Redis instance.
 
 #### Check configuration in the Kyma Console UI
 
@@ -242,7 +242,7 @@ Select the numbers-generator-service, and click on it to see it configured.
 
 You can see that Kyma has injected the Secret credentials to the lambda functions at the bottom of the function definition.
 These variables, can be used in your lambda code, to connect to the Redis service, and consume the database. It's great to see how Kyma
-can provide to us, this flexibility on the configurations, and the secured that services have, no plain text password is stored or showed.
+can provide to us this flexibility on the configurations, and the security that services have.  No plain text password is stored or showed.
 
 Now, we are good to go and change our lambda to connect on Redis Service.
  
@@ -252,7 +252,7 @@ Let's edit your first deployment.yaml file created that contains our lambda serv
 
 1. vim deployment.yaml
 2. Find for the numbers-generator-service
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Change the *spec* section to looks like this
 
 ````yaml
@@ -344,7 +344,7 @@ Let's edit your first deployment.yaml file created that contains our lambda serv
 
 1. vim deployment.yaml
 2. Go to the bottom of the file
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Add the following content to the end of the file
 
 `````yaml
@@ -396,9 +396,9 @@ spec:
       memory: 100Mi
 `````
 
-In this new function, we are using the same Redis instance, creating a new client connection,
-after this, we execute the Redis command to retrieve all keys to start to iterate.
-Is a simple node.js code, listing all keys retrieved and pushing to the history Array, that at the end will be the return of the function
+In this new function we are using the same Redis instance creating a new client connection. 
+After this, we execute the Redis command to retrieve all keys to start to iterate.
+It is simple node.js code, listing all keys retrieved and pushing to the history Array, that at the end will be the return of the function
 
 5. Type ```:wq``` and select the Enter key to save the changes.
 
@@ -407,7 +407,7 @@ Is a simple node.js code, listing all keys retrieved and pushing to the history 
  kubectl apply -f deployment.yaml -n devktoberfest
 ```
 
-7. to show the function running lets use kubectl get function command
+7. To show the function running lets use kubectl get function command
 ```shell script
  kubectl get function numbers-history-service -n devktoberfest
 ```
@@ -421,7 +421,7 @@ Let's create this binding, in the same way as we did before, for the numbers-gen
 
 1. vim redisaddon.yaml
 2. Go to the bottom of the file
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Add the following content to the end of the file
 
 ````yaml
@@ -442,7 +442,7 @@ spec:
 ````
 
 Here we have the same declaration of the ServiceBindingUsage object created before, but
-we are changing a new, because is that a new one and the usedBy entry, telling Kyma to bind to our last number-history-service created
+we are making a new change, because it is a new object and the usedBy entry, telling Kyma to bind to our last number-history-service created.
 
 5. Type ```:wq``` and select the Enter key to save the changes.
 
@@ -451,7 +451,7 @@ we are changing a new, because is that a new one and the usedBy entry, telling K
  kubectl apply -f redisaddon.yaml -n devktoberfest
 ```
 
-7. to show the servicebindingusage status lets use kubectl  command
+7. To show the servicebindingusage status lets use kubectl  command
 ```shell script
  kubectl get numbers-redis-binding-history numbers-redis-bindingfunction -n devktoberfest -o=jsonpath="{range .status.conditions[*]}{.type}{'\t'}{.status}{'\n'}{end}"
 ```
@@ -463,14 +463,14 @@ Great!!! One more step completed!!
 
 #### Expose the History Service to be publicly available
 
-Now the function is created, it is bound,  but not exposed yet. For the exercise, let's configure the new service to be
+Now the function is created, it is bound,  but not exposed yet. For the exercise let's configure the new service to be
 accessed without restrictions.
 
 Let`s edit the file security-functions.yaml.
 
 1. vim security-functions.yaml
 2. Go to the bottom of the file
-3. select the **i** key to insert a new line at the top of the file.
+3. Select the **i** key to insert a new line at the top of the file.
 4. Add the following content to the end of the file
 
 ````yaml
@@ -491,7 +491,7 @@ spec:
       accessStrategies:
         - handler: allow
 ````
-With this configuration, we are exposing the service with the name number-history-service, with no handlers, allowing any GET HTTP connection.
+With this configuration we are exposing the service with the name number-history-service, with no handlers, allowing any GET HTTP connection.
 
 5. Type ```:wq``` and select the Enter key to save the changes.
 
@@ -508,7 +508,7 @@ Open your /etc/hosts file again, and let's add the new numbers-history-service t
 In the terminal opened, execute the following commands:
 
 1. sudo vim /etc/hosts
-2. select the **i** key to insert a new line at the top of the file.
+2. Select the **i** key to insert a new line at the top of the file.
 3. Add the following line: ``` {YOUR.MINIKUBE.IP} numbers-history-service.kyma.local ```
 4. Type ```:wq``` and select the Enter key to save the changes.
 
