@@ -7,9 +7,9 @@ The Sample application in use is part of this source code repository and is alre
 
 ### Pre-Requisites
 - working Kyma installation
-- kubectl commandline tools 
-- activated kubeconfig to access the cluster via commandline. <br>
-In case you don't have any commandline tools installed you can still follow along this guide up to Step 8. Step 8 you will need the commandline tools installed to finish.
+- kubectl command-line tools 
+- activated kubeconfig to access the cluster via command-line. <br>
+In case you don't have any command-line tools installed you can still follow along this guide up to Step 8. Step 8 you will need the command-line tools installed to finish.
 
 
 ### You Will Learn How to: 
@@ -26,7 +26,7 @@ If you want to dockerize and build the application yourself, please refer to the
 
 1) ### Create Your namespace
 
-    Please create a namespace to isolate your workloads fom other exercises. <br>
+    Please create a namespace to isolate your workloads from other exercises. <br>
     Name your namspace "exercise06".
 
     | # |Console  | Command Line  |
@@ -36,7 +36,7 @@ If you want to dockerize and build the application yourself, please refer to the
 
 2) ### Deploy the Application
     You can now deploy the application in your namespace. If you have created your namespace using the Console application then the namespace is already activated. All resources you deploy now are scoped to your new namespace. 
-    If you use the commandline, make sure you refer to the newly created namespace, otherwise the changes might be applied to the default one.
+    If you use the command-line make sure you refer to the newly created namespace; otherwise, the changes might be applied to the default one.
 
     | #| Console  | Command Line  |
     |---|---|---|
@@ -70,14 +70,14 @@ If you want to dockerize and build the application yourself, please refer to the
     If you change your deployment replcias to "0", then there would be no apps running in your upstream but the API rule is still intact. 
 
 8) ### Practice and study rolling restart
-    To study how the rolling restart feature of Kubernetes and Kyma work please:
+    To study how the rolling restart feature of Kubernetes and Kyma works please:
     1) Scale your application to 3 replicas
     2) Use the Sample app to produce some load using the **Click me for continuous number stream** button
-    3) After some time multiple histograms are shown and are continuously updating
-    4) Initiate the rolling restart using kubectl commandline ```$ kubectl -n exercise06 rollout restart deployment number-generator``` <br>
+    3) After some time multiple histograms are shown and will be continuously updating
+    4) Initiate the rolling restart using kubectl command-line ```$ kubectl -n exercise06 rollout restart deployment number-generator``` <br>
     You would see new replicas and therefore new histograms appearing similar to this picture: <br>
     ![exercise_06_fresh_replicas](exercise_06_fresh_replicas.png)
 
 
 
-I hope you enjoyed this tutorial. This is only the tip of the iceberg of all available operational features of Kubernetes and Kyma.
+I hope you enjoyed this exercise. This is only the tip of the iceberg of all available operational features of Kubernetes and Kyma.
