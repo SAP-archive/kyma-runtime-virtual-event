@@ -1,5 +1,7 @@
 # Virtual Event - SAP Cloud Platform, Kyma runtime
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/kyma-runtime-virtual-event)](https://api.reuse.software/info/github.com/SAP-samples/kyma-runtime-virtual-event)
+
 ## Description
 
 This repository contains the material for the virtual event on SAP Cloud Platform, Kyma runtime. For this Kyma virtual event as part of Devtoberfest we appreciate you opening issues in this repository to deliver feedback and request support from us, so we can constantly improve the learning content for you.
